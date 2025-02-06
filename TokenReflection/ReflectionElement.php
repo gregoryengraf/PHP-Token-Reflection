@@ -110,7 +110,7 @@ abstract class ReflectionElement extends ReflectionBase
 	 * @param \TokenReflection\Stream\StreamBase $tokenStream Token substream
 	 * @param \TokenReflection\IReflection $parent Parent reflection object
 	 */
-	final protected function parseStream(Stream $tokenStream, IReflection $parent = null)
+	protected function parseStream(Stream $tokenStream, IReflection $parent = null)
 	{
 		$this->fileName = $tokenStream->getFileName();
 

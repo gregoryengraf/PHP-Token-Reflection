@@ -153,20 +153,35 @@ class ReflectionFileNamespace extends ReflectionElement
 		$tokenStream->skipWhitespaces();
 
 		$name = '';
+		$foundName = false;
 		// Iterate over the token stream
-		while (true) {
-			switch ($tokenStream->getType()) {
-				// If the current token is a T_STRING, it is a part of the namespace name
-				case T_STRING:
-				case T_NS_SEPARATOR:
-					$name .= $tokenStream->getTokenValue();
-					break;
-				default:
-					// Stop iterating when other token than string or ns separator found
-					break 2;
+		while ($tokenStream->valid()) {
+			$type = $tokenStream->getType();
+
+			// Check for namespace termination first
+			if ($type === ';' || $type === '{') {
+				break;
 			}
 
-			$tokenStream->skipWhitespaces(true);
+			switch ($type) {
+				case T_STRING:
+				case T_NS_SEPARATOR:
+				case T_NAME_QUALIFIED:
+					$name .= $tokenStream->getTokenValue();
+					$foundName = true;
+					break;
+				case T_WHITESPACE:
+					// Skip whitespace but continue parsing
+					break;
+				default:
+					if ($foundName) {
+						// If we've found a name and hit another token type, we're done
+						break 2;
+					}
+					break;
+			}
+
+			$tokenStream->next();
 		}
 
 		$name = ltrim($name, '\\');
@@ -177,8 +192,14 @@ class ReflectionFileNamespace extends ReflectionElement
 			$this->name = $name;
 		}
 
+		// Verify proper namespace termination
 		if (!$tokenStream->is(';') && !$tokenStream->is('{')) {
-			throw new Exception\ParseException($this, $tokenStream, 'Invalid namespace name end, expecting ";" or "{".', Exception\ParseException::UNEXPECTED_TOKEN);
+			throw new Exception\ParseException(
+				$this,
+				$tokenStream,
+				'Invalid namespace name end, expecting ";" or "{".',
+				Exception\ParseException::UNEXPECTED_TOKEN
+			);
 		}
 
 		$tokenStream->skipWhitespaces();
