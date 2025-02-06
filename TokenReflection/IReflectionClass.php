@@ -25,28 +25,28 @@ interface IReflectionClass extends IReflection
 	 *
 	 * @return string
 	 */
-	public function getShortName();
+	public function getShortName(): string;
 
 	/**
 	 * Returns the namespace name.
 	 *
 	 * @return string
 	 */
-	public function getNamespaceName();
+	public function getNamespaceName(): string;
 
 	/**
 	 * Returns if the class is defined within a namespace.
 	 *
 	 * @return boolean
 	 */
-	public function inNamespace();
+	public function inNamespace(): bool;
 
 	/**
 	 * Returns imported namespaces and aliases from the declaring namespace.
 	 *
 	 * @return array
 	 */
-	public function getNamespaceAliases();
+	public function getNamespaceAliases(): array;
 
 	/**
 	 * Returns the PHP extension reflection.
@@ -102,28 +102,28 @@ interface IReflectionClass extends IReflection
 	 *
 	 * @return boolean
 	 */
-	public function isAbstract();
+	public function isAbstract(): bool;
 
 	/**
 	 * Returns if the class is final.
 	 *
 	 * @return boolean
 	 */
-	public function isFinal();
+	public function isFinal(): bool;
 
 	/**
 	 * Returns if the class is an interface.
 	 *
 	 * @return boolean
 	 */
-	public function isInterface();
+	public function isInterface(): bool;
 
 	/**
 	 * Returns if the class is an exception or its descendant.
 	 *
 	 * @return boolean
 	 */
-	public function isException();
+	public function isException(): bool;
 
 	/**
 	 * Returns if objects of this class are cloneable.
@@ -133,7 +133,7 @@ interface IReflectionClass extends IReflection
 	 * @return boolean
 	 * @see http://svn.php.net/viewvc/php/php-src/trunk/ext/reflection/php_reflection.c?revision=307971&view=markup#l4059
 	 */
-	public function isCloneable();
+	public function isCloneable(): bool;
 
 	/**
 	 * Returns if the class is iterateable.
@@ -142,7 +142,7 @@ interface IReflectionClass extends IReflection
 	 *
 	 * @return boolean
 	 */
-	public function isIterateable();
+	public function isIterateable(): bool;
 
 	/**
 	 * Returns if the current class is a subclass of the given class.
@@ -552,7 +552,7 @@ interface IReflectionClass extends IReflection
 	 * @return boolean
 	 * @throws \TokenReflection\Exception\RuntimeException If the provided argument is not an object.
 	 */
-	public function isInstance($object);
+	public function isInstance(object $object): bool;
 
 	/**
 	 * Creates a new class instance without using a constructor.

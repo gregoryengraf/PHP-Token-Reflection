@@ -25,7 +25,7 @@ interface IReflectionFunction extends IReflectionFunctionBase
 	 *
 	 * @return boolean
 	 */
-	public function isDisabled();
+	public function isDisabled(): bool;
 
 	/**
 	 * Calls the function.
@@ -45,14 +45,14 @@ interface IReflectionFunction extends IReflectionFunctionBase
 	 * @param array $args Function parameter values
 	 * @return mixed
 	 */
-	public function invokeArgs(array $args);
+	public function invokeArgs(array $args = []): mixed;
 
 	/**
 	 * Returns the function/method as closure.
 	 *
 	 * @return \Closure
 	 */
-	public function getClosure();
+	public function getClosure(): \Closure;
 
 	/**
 	 * Returns if the function definition is valid.
@@ -61,12 +61,12 @@ interface IReflectionFunction extends IReflectionFunctionBase
 	 *
 	 * @return boolean
 	 */
-	public function isValid();
+	public function isValid(): bool;
 
 	/**
 	 * Returns imported namespaces and aliases from the declaring namespace.
 	 *
 	 * @return array
 	 */
-	public function getNamespaceAliases();
+	public function getNamespaceAliases(): array;
 }

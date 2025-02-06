@@ -94,7 +94,7 @@ class Memory implements Broker\Backend
 	 * @param string $fileName File name
 	 * @return boolean
 	 */
-	public function hasFile($fileName)
+	public function hasFile(string $fileName): bool
 	{
 		return isset($this->files[$fileName]);
 	}
@@ -106,10 +106,14 @@ class Memory implements Broker\Backend
 	 * @return \TokenReflection\ReflectionFile
 	 * @throws \TokenReflection\Exception\BrokerException If the requested file has not been processed
 	 */
-	public function getFile($fileName)
+	public function getFile(string $fileName): TokenReflection\ReflectionFile
 	{
 		if (!isset($this->files[$fileName])) {
-			throw new Exception\BrokerException($this->getBroker(), sprintf('File "%s" has not been processed.', $fileName), Exception\BrokerException::DOES_NOT_EXIST);
+			throw new Exception\BrokerException(
+				$this->getBroker(),
+				sprintf('File "%s" has not been processed.', $fileName),
+				Exception\BrokerException::DOES_NOT_EXIST
+			);
 		}
 
 		return $this->files[$fileName];
@@ -120,7 +124,7 @@ class Memory implements Broker\Backend
 	 *
 	 * @return array
 	 */
-	public function getFiles()
+	public function getFiles(): array
 	{
 		return $this->files;
 	}
@@ -173,7 +177,7 @@ class Memory implements Broker\Backend
 	 * @param string $className Class name
 	 * @return boolean
 	 */
-	public function hasClass($className)
+	public function hasClass(string $className): bool
 	{
 		$className = ltrim($className, '\\');
 		if ($pos = strrpos($className, '\\')) {

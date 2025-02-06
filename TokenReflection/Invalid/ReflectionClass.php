@@ -905,7 +905,7 @@ class ReflectionClass extends ReflectionElement implements IReflectionClass
 	 * @return boolean
 	 * @throws \TokenReflection\Exception\RuntimeException If the provided argument is not an object.
 	 */
-	public function isInstance($object)
+	public function isInstance(object $object): bool
 	{
 		if (!is_object($object)) {
 			throw new Exception\RuntimeException(sprintf('Parameter must be a class instance, "%s" provided.', gettype($object)), Exception\RuntimeException::INVALID_ARGUMENT, $this);
@@ -920,10 +920,14 @@ class ReflectionClass extends ReflectionElement implements IReflectionClass
 	 * @return object
 	 * @throws \TokenReflection\Exception\RuntimeException If the class inherits from an internal class.
 	 */
-	public function newInstanceWithoutConstructor()
+	public function newInstanceWithoutConstructor(): object
 	{
 		if (!class_exists($this->name, true)) {
-			throw new Exception\RuntimeException('Could not create an instance; class does not exist.', Exception\RuntimeException::DOES_NOT_EXIST, $this);
+			throw new Exception\RuntimeException(
+				'Could not create an instance; class does not exist.',
+				Exception\RuntimeException::DOES_NOT_EXIST,
+				$this
+			);
 		}
 
 		$reflection = new \TokenReflection\Php\ReflectionClass($this->name, $this->getBroker());
@@ -938,9 +942,9 @@ class ReflectionClass extends ReflectionElement implements IReflectionClass
 	 * @param mixed $args
 	 * @return object
 	 */
-	public function newInstance($args)
+	public function newInstance(mixed ...$args): object
 	{
-		return $this->newInstanceArgs(func_get_args());
+		return $this->newInstanceArgs($args);
 	}
 
 	/**
@@ -950,10 +954,14 @@ class ReflectionClass extends ReflectionElement implements IReflectionClass
 	 * @return object
 	 * @throws \TokenReflection\Exception\RuntimeException If the required class does not exist.
 	 */
-	public function newInstanceArgs(array $args = array())
+	public function newInstanceArgs(array $args = []): object
 	{
 		if (!class_exists($this->name, true)) {
-			throw new Exception\RuntimeException('Could not create an instance of class; class does not exist.', Exception\RuntimeException::DOES_NOT_EXIST, $this);
+			throw new Exception\RuntimeException(
+				'Could not create an instance of class; class does not exist.',
+				Exception\RuntimeException::DOES_NOT_EXIST,
+				$this
+			);
 		}
 
 		$reflection = new InternalReflectionClass($this->name);
