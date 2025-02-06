@@ -261,7 +261,7 @@ class ReflectionFileNamespace extends ReflectionElement
 							break 2;
 						} elseif (',' === $type) {
 							// Next namespace in the current "use" definition
-							continue;
+							continue 2;
 						}
 
 						throw new Exception\ParseException($this, $tokenStream, 'Unexpected token found.', Exception\ParseException::UNEXPECTED_TOKEN);
@@ -372,7 +372,7 @@ class ReflectionFileNamespace extends ReflectionElement
 							->findMatchingBracket()
 							->next();
 
-						continue;
+						continue 2;
 					}
 
 					$function = new ReflectionFunction($tokenStream, $this->getBroker(), $this);
