@@ -261,7 +261,7 @@ class ReflectionFileNamespace extends ReflectionElement
 							break 2;
 						} elseif (',' === $type) {
 							// Next namespace in the current "use" definition
-							continue 3;
+							continue;
 						}
 
 						throw new Exception\ParseException($this, $tokenStream, 'Unexpected token found.', Exception\ParseException::UNEXPECTED_TOKEN);
