@@ -29,7 +29,7 @@ abstract class ReflectionElement extends ReflectionBase
 	 *
 	 * @var string
 	 */
-	const DOCBLOCK_TEMPLATE_START = '/**#@+';
+	const DOCBLOCK_TEMPLATE_START = '/**#+';
 
 	/**
 	 * Docblock template end.
@@ -294,7 +294,7 @@ abstract class ReflectionElement extends ReflectionBase
 	 * @param \TokenReflection\Stream\StreamBase $tokenStream Token susbtream
 	 * @return \TokenReflection\ReflectionElement
 	 */
-	private final function parseStartLine(Stream $tokenStream)
+	private function parseStartLine(Stream $tokenStream)
 	{
 		$token = $tokenStream->current();
 		$this->startLine = $token[2];
@@ -310,7 +310,7 @@ abstract class ReflectionElement extends ReflectionBase
 	 * @param \TokenReflection\Stream\StreamBase $tokenStream Token susbtream
 	 * @return \TokenReflection\ReflectionElement
 	 */
-	private final function parseEndLine(Stream $tokenStream)
+	private function parseEndLine(Stream $tokenStream)
 	{
 		$token = $tokenStream->current();
 		$this->endLine = $token[2];
